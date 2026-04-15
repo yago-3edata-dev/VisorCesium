@@ -19,7 +19,7 @@
     const viewer = new Cesium.Viewer("cesiumContainer");
 
     async function loadTileset() {
-      const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(TU_ASSET_ID);
+      const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(4621173);
       viewer.scene.primitives.add(tileset);
       viewer.zoomTo(tileset);
     }
