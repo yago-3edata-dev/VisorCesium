@@ -16,7 +16,18 @@
   <script>
     Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGM2YzExOS01NDNmLTQzYzgtODFlMC05MmVlMzcwMzUyMjEiLCJpZCI6NDE3NjE5LCJpYXQiOjE3NzYyNjc3NjV9.2b-CGPgtnMv7N9Ycy0si9rNwsjGW41OU_arOWkP6ZSI";
 
-    const viewer = new Cesium.Viewer("cesiumContainer");
+    const viewer = new Cesium.Viewer("cesiumContainer", {
+      animation: false,
+      timeline: false,
+      baseLayerPicker: false,
+      geocoder: false,
+      homeButton: false,
+      sceneModePicker: false,
+      navigationHelpButton: false,
+      fullscreenButton: false,
+      infoBox: false,
+      selectionIndicator: false
+    });
 
     async function loadTileset() {
       const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(4621173);
