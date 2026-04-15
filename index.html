@@ -1,30 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <script src="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Cesium.js"></script>
-  <link href="https://cesium.com/downloads/cesiumjs/releases/1.111/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-  <style>
-    html, body, #cesiumContainer {
-      width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
-    }
-  </style>
-</head>
-<body>
-  <div id="cesiumContainer"></div>
+<script>
+  Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiMmVjMTk0NS01NzBkLTRlMDMtYWFhNC1lMTE4ZTY2MWRlYmYiLCJpZCI6NDE3NjE5LCJpYXQiOjE3NzYwOTIyOTF9.5Nybnflf3AejctjnuaOLFf3jrdHNZMP8m8Za60pdxbU";
 
-  <script>
-    Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJhMGM2YzExOS01NDNmLTQzYzgtODFlMC05MmVlMzcwMzUyMjEiLCJpZCI6NDE3NjE5LCJpYXQiOjE3NzYyNjc3NjV9.2b-CGPgtnMv7N9Ycy0si9rNwsjGW41OU_arOWkP6ZSI";
+  const viewer = new Cesium.Viewer("cesiumContainer");
 
-    const viewer = new Cesium.Viewer("cesiumContainer");
-
-    async function loadTileset() {
+  async function loadTileset() {
+    try {
       const tileset = await Cesium.Cesium3DTileset.fromIonAssetId(4621173);
-      viewer.scene.primitives.add(tileset);
-      viewer.zoomTo(tileset);
-    }
 
-    loadTileset();
-  </script>
-</body>
-</html>
+      viewer.scene.primitives.add(tileset);
+      await viewer.zoomTo(tileset);
+
+      const extras = tileset.asset.extras;
+      if (
+        Cesium.defined(extras) &&
+        Cesium.defined(extras.ion) &&
+        Cesium.defined(extras.ion.defaultStyle)
+      ) {
+        tileset.style = new Cesium.Cesium3DTileStyle(extras.ion.defaultStyle);
+      }
+
+    } catch (error) {
+      console.error("Error cargando tileset:", error);
+    }
+  }
+
+  loadTileset();
+</script>
